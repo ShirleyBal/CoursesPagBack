@@ -13,17 +13,17 @@ app.use(bodyParser.urlencoded({ extended: true })); // Para manejar datos codifi
 
 // Rutas de ejemplo
 app.get('/', (req, res) => {
-  res.send('¡Servidor funcionando correctamente!');
+  res.send('¡Server running correctly!');
 });
 
 // Rutas dinámicas (ejemplo, cursos)
-import cursoRoutes from './routes/cursos.js';// Importar las rutas de cursos
+import cursoRoutes from './routes/coursesroutes.js';// Importar las rutas de cursos
 app.use('/api/cursos', cursoRoutes); // Asociar las rutas con un prefijo
 
 // Middleware para manejar errores
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: 'Algo salió mal en el servidor.' });
+  res.status(500).json({ error: 'Something went wrong on the server.' });
 });
 
 export default app;

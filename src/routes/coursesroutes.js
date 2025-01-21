@@ -4,7 +4,7 @@ const router = express.Router();
 
 // Ruta de ejemplo
 router.get('/', (req, res) => {
-  res.send('Lista de cursos');
+  res.send('list of courses');
 });
 
 export default router;
