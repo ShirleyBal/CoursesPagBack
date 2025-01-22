@@ -5,37 +5,56 @@ class Course extends Model {}
 
 Course.init(
   {
-    id_course: {
+    curso_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    title: {
-      type: DataTypes.STRING,
+    titulo: {
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
-    description: {
+    descripcion: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    category: {
-      type: DataTypes.STRING,
+    categoria: {
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
-    professor: {
-      type: DataTypes.STRING,
+    profesor_id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    isLive: {
-      type: DataTypes.BOOLEAN,
+    tipo: {
+      type: DataTypes.STRING(20),
       allowNull: false,
+      validate: {
+        isIn: [['grabado', 'en vivo']], 
+      },
+    },
+    fecha: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+    },
+    hora: {
+      type: DataTypes.TIME,
+      allowNull: false,
+    },
+    enlace: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    contenido_grabado: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
   },
   {
     sequelize,
     modelName: 'Course',
-    tableName: 'courses', // Corresponding table name in the database
-    timestamps: false, // If you don't want Sequelize to automatically add timestamps
+    tableName: 'courses',
+    timestamps: false,
   }
 );
 

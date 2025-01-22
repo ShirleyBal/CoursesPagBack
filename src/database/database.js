@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize('CoursesPagBack', 'postgres', 'Qwerty1997', {
+const sequelize = new Sequelize('courses_db', 'postgres', 'Qwerty1997', {
   host: 'localhost',
   dialect: 'postgres',
 });
