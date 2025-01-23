@@ -1,52 +1,53 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
+import { DataTypes, Model } from 'sequelize'; 
 import { sequelize } from '../database/database.js';
 
 class Course extends Model {}
 
 Course.init(
   {
-    curso_id: {
+    course_id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
       autoIncrement: true,
+      primaryKey: true,
     },
-    titulo: {
+    title: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    descripcion: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    categoria: {
+    category: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    profesor_id: {
+    teacher_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    tipo: {
+    type: {
       type: DataTypes.STRING(20),
       allowNull: false,
-      validate: {
-        isIn: [['grabado', 'en vivo']], 
-      },
     },
-    fecha: {
+    date: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    hora: {
+    hour: {
       type: DataTypes.TIME,
       allowNull: false,
     },
-    enlace: {
+    link: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    contenido_grabado: {
+    recorded_content: {
       type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    front_page: {
+      type: DataTypes.TEXT, 
       allowNull: true,
     },
   },

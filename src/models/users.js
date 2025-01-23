@@ -1,20 +1,22 @@
+// In User model
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { sequelize } from '../database/database.js';
+import Enrollment from './enrollment.js'; // If you're using the Enrollment model
 
 class User extends Model {}
 
 User.init(
   {
-    usuario_id: {
+    user_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    nombre: {
+    name: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    apellido: {
+    last_name: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
@@ -23,14 +25,14 @@ User.init(
       allowNull: false,
       unique: true,
     },
-    rol: {
+    role: {
       type: DataTypes.STRING(20),
       allowNull: false,
       validate: {
         isIn: [['alumno', 'profesor']], // Validación para rol
       },
     },
-    contrasena: {
+    password: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
@@ -42,5 +44,8 @@ User.init(
     timestamps: false,
   }
 );
+
+// Relationship with enrollments (if needed)
+User.hasMany(Enrollment, { foreignKey: 'user_id' });
 
 export default User;

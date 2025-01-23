@@ -1,27 +1,28 @@
+// In Comment model
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { sequelize } from '../database/database.js';
-import Course from './courses.js';
+import Course from './courses.js'; 
 import User from './users.js';
 
 class Comment extends Model {}
 
 Comment.init(
   {
-    comentario_id: {
+    comment_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    comentario: {
+    comment: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    puntuacion: {
+    punctuation: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         min: 1,
-        max: 5, // Validación para que la puntuación esté entre 1 y 5
+        max: 5, 
       },
     },
   },
@@ -33,10 +34,10 @@ Comment.init(
   }
 );
 
-// Relación con las tablas de cursos y usuarios
-Course.hasMany(Comment, { foreignKey: 'curso_id' });
-User.hasMany(Comment, { foreignKey: 'usuario_id' });
-Comment.belongsTo(Course, { foreignKey: 'curso_id' });
-Comment.belongsTo(User, { foreignKey: 'usuario_id' });
+// Ensure consistent foreign keys
+Course.hasMany(Comment, { foreignKey: 'course_id' });
+User.hasMany(Comment, { foreignKey: 'user_id' }); // Make it consistent with 'user_id'
+Comment.belongsTo(Course, { foreignKey: 'course_id' }); // Consistent foreign key
+Comment.belongsTo(User, { foreignKey: 'user_id' }); // Consistent foreign key
 
 export default Comment;

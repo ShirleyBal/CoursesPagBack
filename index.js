@@ -1,27 +1,22 @@
 import dotenv from 'dotenv';
 import app from './src/app.js';
 import { sequelize } from './src/database/database.js';
-import { setupAssociations } from './src/associations.js';
+import { setupAssociations } from './src/associations.js';  // Import associations here
 
-// Cargar variables de entorno
-dotenv.config();
+// Call associations setup after all models are loaded
+setupAssociations();
 
 const PORT = process.env.PORT || 3000;
 
-// Configurar las relaciones
-setupAssociations();
-
-// Sincronizar modelos con la base de datos
 async function syncModels() {
   try {
-    await sequelize.sync({ force: true }); // false: elimina
+    await sequelize.sync({ force: true }); // false: remove this if not dropping tables
     console.log('Models synchronized with the database!');
   } catch (error) {
     console.error('Error syncing models:', error);
   }
 }
 
-// Iniciar el servidor y sincronizar modelos
 async function startServer() {
   try {
     await syncModels();
@@ -33,5 +28,4 @@ async function startServer() {
   }
 }
 
-// Ejecutar el servidor
 startServer();
