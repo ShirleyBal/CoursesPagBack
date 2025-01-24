@@ -7,7 +7,6 @@ const router = express.Router();
 //   res.send('list of courses');
 // });
 
-
 // Get all courses
 router.get('/courses', async (req, res) => {
   try {
@@ -17,7 +16,5 @@ router.get('/courses', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-
 
 export default router;
