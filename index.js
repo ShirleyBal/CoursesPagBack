@@ -1,18 +1,17 @@
 import dotenv from 'dotenv';
 import app from './src/app.js';
-import { sequelize } from './src/database/database.js';
+import sequelize from './src/database/database.js';  // Cambié a importación por defecto
 import { setupAssociations } from './src/associations.js'; 
 
 import cors from 'cors';
 // Call associations setup after all models are loaded
 setupAssociations();
+dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-//Receive requests
-
+// Receive requests
 app.use(cors());
-
 
 async function syncModels() {
   try {
@@ -33,5 +32,6 @@ async function startServer() {
     console.error('Error starting server:', error);
   }
 }
+
 
 startServer();

@@ -1,5 +1,5 @@
+import sequelize from '../database/database.js';  // Importación por defecto
 import { DataTypes, Model } from 'sequelize'; 
-import { sequelize } from '../database/database.js';
 
 class Course extends Model {}
 

@@ -1,6 +1,6 @@
 // In User model
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import { sequelize } from '../database/database.js';
+import sequelize from '../database/database.js'; 
 import Enrollment from './enrollment.js'; // If you're using the Enrollment model
 
 class User extends Model {}

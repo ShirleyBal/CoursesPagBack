@@ -1,6 +1,6 @@
 // In Comment model
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import { sequelize } from '../database/database.js';
+import sequelize from '../database/database.js'; 
 import Course from './courses.js'; 
 import User from './users.js';
 
