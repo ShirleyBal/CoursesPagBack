@@ -7,11 +7,17 @@ const router = express.Router();
 //   res.send('list of courses');
 // });
 
+
 // Get all courses
 router.get('/courses', async (req, res) => {
   try {
     const courses = await Course.findAll();
-    res.json(courses);
+    
+    // Asegurarnos de convertir los objetos Sequelize a JSON
+    const coursesJSON = courses.map(course => course.toJSON());
+    
+    // Devolver la respuesta como JSON
+    res.json(coursesJSON);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
