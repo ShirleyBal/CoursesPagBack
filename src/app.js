@@ -1,26 +1,25 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import cursoRoutes from './routes/coursesroutes.js';// Importar las rutas de cursos
-// Crear la aplicación Express
+import cursoRoutes from './routes/coursesroutes.js';
 
+// Create the Express Application
 const app = express();
 
-// Configurar middlewares
-app.use(cors()); // Permitir solicitudes desde cualquier origen (configurable más adelante)
-app.use(bodyParser.json()); // Para manejar JSON en el cuerpo de las solicitudes
-app.use(bodyParser.urlencoded({ extended: false })); // Para manejar datos codificados en URL
+// Configure middlewares
+app.use(cors()); // Allow requests from any origin (configurable later)
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: false })); // To handle URL-encoded data
 
-// Rutas de ejemplo
+// Example routes
 app.get('/', (req, res) => {
   res.send('¡Server running correctly!');
 });
 
-// Rutas dinámicas (ejemplo, cursos)
+// Dynamic routes (example, courses)
+app.use('/api', cursoRoutes); // Associate routes with a prefix
 
-app.use('/api', cursoRoutes); // Asociar las rutas con un prefijo
-
-// Middleware para manejar errores
+// Middleware for handling errors
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Something went wrong on the server.' });
