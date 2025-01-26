@@ -15,7 +15,7 @@ app.use(cors());
 
 async function syncModels() {
   try {
-    await sequelize.sync({ force: true }); // false: remove this if not dropping tables
+    await sequelize.sync({ force: false }); // false: remove this if not dropping tables
     console.log('Models synchronized with the database!');
   } catch (error) {
     console.error('Error syncing models:', error);
