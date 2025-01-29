@@ -1,7 +1,8 @@
 // In User model
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import sequelize from '../database/database.js'; 
-import Enrollment from './enrollment.js'; // If you're using the Enrollment model
+import bcrypt from 'bcryptjs'; // Librería para encriptar contraseñas
+import Enrollment from './enrollment.js';
 
 class User extends Model {}
 
@@ -29,7 +30,7 @@ User.init(
       type: DataTypes.STRING(20),
       allowNull: false,
       validate: {
-        isIn: [['alumno', 'profesor']], // Validación para rol
+        isIn: [['student', 'administrator']], // Validación para rol
       },
     },
     password: {
@@ -42,10 +43,22 @@ User.init(
     modelName: 'User',
     tableName: 'users',
     timestamps: false,
+    hooks: {
+      beforeCreate: async (user) => {
+        if (user.password) {
+          user.password = await bcrypt.hash(user.password, 10); // Encripta la contraseña antes de guardar
+        }
+      },
+    },
   }
 );
 
-// Relationship with enrollments (if needed)
+// Método para comparar contraseñas
+User.prototype.comparePassword = async function (password) {
+  return bcrypt.compare(password, this.password);
+};
+
+// Relación con las inscripciones
 User.hasMany(Enrollment, { foreignKey: 'user_id' });
 
 export default User;

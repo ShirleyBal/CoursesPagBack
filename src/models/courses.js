@@ -1,4 +1,4 @@
-import sequelize from '../database/database.js';  // Importación por defecto
+import sequelize from '../database/database.js'; // Default import
 import { DataTypes, Model } from 'sequelize'; 
 
 class Course extends Model {}
@@ -22,13 +22,12 @@ Course.init(
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    teacher_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     type: {
       type: DataTypes.STRING(20),
       allowNull: false,
+      validate: {
+        isIn: [['recorded', 'live']], // Only allows these values
+      },
     },
     date: {
       type: DataTypes.DATEONLY,
@@ -38,17 +37,27 @@ Course.init(
       type: DataTypes.TIME,
       allowNull: false,
     },
-    link: {
+    video_link: {
       type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    recorded_content: {
-      type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: true, // For recorded courses only
+      validate: {
+        isUrl: true, // Verify that it is a valid link
+      },
     },
     front_page: {
-      type: DataTypes.TEXT, 
+      type: DataTypes.TEXT,
       allowNull: true,
+    },
+    price: {
+      type: DataTypes.DECIMAL(10, 2), // Allows prices with decimals
+      allowNull: false,
+    },
+    quota: {
+      type: DataTypes.INTEGER,
+      allowNull: true, // Optional for recorded courses
+      validate: {
+        min: 1, // Make sure it is a positive number
+      },
     },
   },
   {
@@ -56,6 +65,13 @@ Course.init(
     modelName: 'Course',
     tableName: 'courses',
     timestamps: false,
+    hooks: {
+      beforeValidate: (course) => {
+        if (course.type === 'live' && !course.quota) {
+          throw new Error('Live courses must have a quota.');
+        }
+      },
+    },
   }
 );
 
