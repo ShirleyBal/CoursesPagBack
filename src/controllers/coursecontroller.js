@@ -1,4 +1,4 @@
-import { createCourse, getCourses, updateCourse, deleteCourse } from '../handlers/courseHandler.js';
+import { createCourse, getCourses, updateCourse, deleteCourse } from '../handlers/coursehandler.js';
 
 export const createCourseController = async (req, res) => {
   try {

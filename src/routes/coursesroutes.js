@@ -21,7 +21,7 @@
 // export default router;
 
 import express from 'express';
-import { createCourseController, getCoursesController, updateCourseController, deleteCourseController } from '../controllers/courseController.js';
+import { createCourseController, getCoursesController, updateCourseController, deleteCourseController } from '../controllers/coursecontroller.js';
 
 const router = express.Router();
 
