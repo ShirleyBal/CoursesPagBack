@@ -2,12 +2,12 @@ import Comment from '../models/Comment.js';
 import Enrollment from '../models/Enrollment.js';
 
 export const createComment = async (user_id, course_id, comment, punctuation) => {
-  // Verifica que el usuario haya comprado el curso y esté aprobado
+  // Verify that the user has purchased the course and is approved
   const enrollment = await Enrollment.findOne({
     where: {
       course_id,
       user_id,
-      state: 'approved', // El usuario debe estar aprobado
+      state: 'approved', // User must be approved
     },
   });
 
@@ -15,7 +15,7 @@ export const createComment = async (user_id, course_id, comment, punctuation) =>
     throw new Error('You must have purchased the course to comment.');
   }
 
-  // Verifica que el usuario no haya comentado ya el curso
+  // Check that the user has not already commented on the course
   const existingComment = await Comment.findOne({
     where: {
       course_id,
@@ -27,7 +27,7 @@ export const createComment = async (user_id, course_id, comment, punctuation) =>
     throw new Error('You can only comment once per course.');
   }
 
-  // Crea el comentario si las validaciones son correctas
+  // Create the comment if the validations are correct
   const newComment = await Comment.create({
     user_id,
     course_id,

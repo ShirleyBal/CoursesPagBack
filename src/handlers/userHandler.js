@@ -6,13 +6,13 @@ import { isAdmin } from '../middlewares/roleMiddleware.js';
 
 const router = Router();
 
-// Registro de un nuevo usuario
+// Registering a new user
 router.post('/register', registerUser);
 
-// Inicio de sesión de usuario
+// User login
 router.post('/login', loginUser);
 
-// Obtener todos los usuarios (solo admin)
+// Get all users (admin only)
 router.get('/users', authenticate, isAdmin, getUsers);
 
 export default router;

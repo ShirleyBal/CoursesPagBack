@@ -126,7 +126,7 @@ const courses = [
 
 const seedCourses = async () => {
   try {
-    await sequelize.sync(); // Asegurar que la base de datos está sincronizada
+    await sequelize.sync(); // Ensuring the database is synchronized
     await Course.bulkCreate(courses);
     console.log('✅ Courses added successfully.');
     process.exit();

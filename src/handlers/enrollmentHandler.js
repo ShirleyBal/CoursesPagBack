@@ -2,13 +2,13 @@ import Enrollment from '../models/Enrollment.js';
 import Course from '../models/Course.js';
 
 export const createEnrollment = async (course_id, user_id) => {
-  // Verifica si el curso existe
+  // Check if the course exists
   const course = await Course.findOne({ where: { course_id } });
   if (!course) {
     throw new Error('Course not found.');
   }
 
-  // Si el curso es en vivo, verifica la disponibilidad de los cupos
+  // If the course is live, check the availability of places
   if (course.type === 'live') {
     const enrolledCount = await Enrollment.count({ where: { course_id } });
     if (enrolledCount >= course.quota) {
@@ -16,30 +16,30 @@ export const createEnrollment = async (course_id, user_id) => {
     }
   }
 
-  // Crea una nueva inscripción
+  // Create a new registration
   const enrollment = await Enrollment.create({
     course_id,
     user_id,
-    state: 'pending', // El estado por defecto es 'pending'
+    state: 'pending', // The default status is 'pending'
   });
 
   return enrollment;
 };
 
 export const getEnrollments = async () => {
-  // Recupera todas las inscripciones de la base de datos
+  // Retrieves all entries from the database
   const enrollments = await Enrollment.findAll();
   return enrollments;
 };
 
 export const updateEnrollment = async (enrollment_id, state) => {
-  // Verifica si la inscripción existe
+  // Check if the registration exists
   const enrollment = await Enrollment.findOne({ where: { inscription_id: enrollment_id } });
   if (!enrollment) {
     throw new Error('Enrollment not found.');
   }
 
-  // Actualiza el estado de la inscripción
+  // Update registration status
   await enrollment.update({
     state, // Puede ser 'approved', 'rejected', etc.
   });
@@ -48,12 +48,11 @@ export const updateEnrollment = async (enrollment_id, state) => {
 };
 
 export const deleteEnrollment = async (enrollment_id) => {
-  // Verifica si la inscripción existe
+  // Check if the registration exists
   const enrollment = await Enrollment.findOne({ where: { inscription_id: enrollment_id } });
   if (!enrollment) {
     throw new Error('Enrollment not found.');
   }
 
-  // Elimina la inscripción
   await enrollment.destroy();
 };

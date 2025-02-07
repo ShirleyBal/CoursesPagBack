@@ -1,7 +1,7 @@
 import Course from '../models/courses.js';
 
 export const createCourse = async ({ title, description, category, type, date, hour, link, front_page, price, quota }) => {
-  // Validaciones de negocio antes de crear el curso
+  // Business validations before creating the course
   if (type === 'live' && !quota) {
     throw new Error('Live courses must have a quota.');
   }
@@ -10,7 +10,7 @@ export const createCourse = async ({ title, description, category, type, date, h
     throw new Error('All course fields are required.');
   }
 
-  // Crea el nuevo curso en la base de datos
+  // Create the new course in the database
   const newCourse = await Course.create({
     title,
     description,
@@ -21,26 +21,26 @@ export const createCourse = async ({ title, description, category, type, date, h
     link,
     front_page,
     price,
-    quota: type === 'live' ? quota : null, // Solo los cursos en vivo tienen cuota
+    quota: type === 'live' ? quota : null, // Only live courses have a fee
   });
 
   return newCourse;
 };
 
 export const getCourses = async () => {
-  // Recupera todos los cursos de la base de datos
+  // Retrieve all courses from the database
   const courses = await Course.findAll();
   return courses;
 };
 
 export const updateCourse = async (course_id, { title, description, category, type, date, hour, link, front_page, price, quota }) => {
-  // Verifica si el curso existe
+  // Check if the course exists
   const course = await Course.findOne({ where: { course_id } });
   if (!course) {
     throw new Error('Course not found.');
   }
 
-  // Actualiza los campos del curso
+  // Update course fields
   await course.update({
     title,
     description,
@@ -51,19 +51,19 @@ export const updateCourse = async (course_id, { title, description, category, ty
     link,
     front_page,
     price,
-    quota: type === 'live' ? quota : null, // Solo los cursos en vivo tienen cuota
+    quota: type === 'live' ? quota : null, // Only live courses have a fee
   });
 
   return course;
 };
 
 export const deleteCourse = async (course_id) => {
-  // Verifica si el curso existe
+  // Check if the course exists
   const course = await Course.findOne({ where: { course_id } });
   if (!course) {
     throw new Error('Course not found.');
   }
 
-  // Elimina el curso
+  // Delete the course
   await course.destroy();
 };
