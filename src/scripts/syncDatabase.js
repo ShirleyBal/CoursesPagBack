@@ -3,7 +3,7 @@ import Course from '../models/courses.js';
 
 (async () => {
   try {
-    await sequelize.sync({ force: false }); // Drop and recreate tables
+    await sequelize.sync({ alter: false }); // Drop and recreate tables
     console.log('Database synchronized and table recreated.');
     process.exit(0); // The process ends successfully
   } catch (error) {
