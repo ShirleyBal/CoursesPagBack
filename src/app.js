@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import cursoRoutes from './routes/coursesroutes.js';
+import filterRoutes from './routes/filterRoutes.js'
 
 // Create the Express Application
 const app = express();
@@ -17,7 +18,8 @@ app.get('/', (req, res) => {
 });
 
 // Dynamic routes (example, courses)
-app.use('/api', cursoRoutes); // Associate routes with a prefix
+app.use('/api/courses', cursoRoutes); // Associate routes with a prefix
+app.use("/api/courses/filter", filterRoutes); // course filters
 
 // Middleware for handling errors
 app.use((err, req, res, next) => {
